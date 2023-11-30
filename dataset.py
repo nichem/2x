@@ -14,6 +14,8 @@ class CustomDataset(Dataset):
         self.t1 = transforms.Compose(
             [
                 transforms.RandomCrop(imgSize),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomVerticalFlip(),
                 transforms.ToTensor(),
             ]
         )
