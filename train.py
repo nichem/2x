@@ -12,7 +12,7 @@ model2 = load_model2(True)
 optimizer = optim.Adam(model.parameters(), 1e-3)
 optimizer2 = optim.Adam(model2.parameters(), 1e-3)
 lossFn = nn.MSELoss().to(DEVICE)
-for i in range(1):
+for i in range(100):
     for data in trainDataloader:
         x, y = data
         x: torch.Tensor = x.to(DEVICE)
@@ -34,4 +34,5 @@ for i in range(1):
 
         print(f"gloss:{loss.item()} dloss:{loss3.item()}")
 
-        torch.save(model.state_dict(), "model.pt")
+    torch.save(model.state_dict(), "model.pt")
+    torch.save(model2.state_dict(), "model2.pt")
