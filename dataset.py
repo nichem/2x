@@ -23,6 +23,8 @@ class CustomDataset(Dataset):
     def __getitem__(self, index):
         file = random.choice(self.files)
         img = Image.open(file)
+        if img.mode == "RGBA":
+            img = img.convert("RGB")
         tensor = self.t1(img)
         tensor2 = self.t2(tensor)
         return tensor2, tensor
@@ -39,6 +41,6 @@ testDataloader = DataLoader(testDataset, 64, drop_last=True)
 
 if __name__ == "__main__":
     x, y = trainDataset[0]
-    utils.save_image(x,"out/dataset_x.jpg")
-    utils.save_image(y,"out/dataset_y.jpg")
+    utils.save_image(x, "out/dataset_x.jpg")
+    utils.save_image(y, "out/dataset_y.jpg")
     print(x.shape, y.shape)
