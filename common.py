@@ -12,3 +12,13 @@ def load_model(train: bool) -> Model:
     else:
         model.eval()
     return model
+
+def load_model2(train: bool) -> Model2:
+    model = Model2().to(DEVICE)
+    if os.path.exists("model2.pt"):
+        model.load_state_dict(torch.load("model2.pt", map_location=DEVICE))
+    if train:
+        model.train()
+    else:
+        model.eval()
+    return model

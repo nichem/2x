@@ -43,9 +43,36 @@ class Model(nn.Module):
         return x
 
 
+class Model2(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+
+        def block(i, o):
+            return [
+                nn.Conv2d(i, o, 3, 1, 1),
+                nn.Conv2d(o, o, 3, 1, 1),
+                # nn.BatchNorm2d(o),
+                nn.ReLU(),
+                nn.MaxPool2d(2),
+            ]
+
+        self.cnn = nn.Sequential(*block(3, 64))
+        self.cnn2 = nn.Sequential(
+            nn.Conv2d(64, 3, 3, 1, 1), nn.Conv2d(3, 3, 3, 1, 1), nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.cnn(x)
+        x = self.cnn2(x)
+
+        return x
+
+
 if __name__ == "__main__":
     model = Model()
+    model2 = Model2()
     input = torch.zeros((1, 3, IMAGE_SIZE, IMAGE_SIZE))
     output = model(input)
-    print(output.shape)
-    print(model)
+    output2 = model2(output)
+    print(output.shape, output2.shape)
+    # print(model)
